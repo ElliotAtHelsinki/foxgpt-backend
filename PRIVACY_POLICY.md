@@ -1,0 +1,1 @@
+This backend server doesn't store any user data. Data sent to the server is only used temporarily to fetch the related news articles. Chat content might be logged by OpenAI, which is not the creator of this GPT.

@@ -1,0 +1,65 @@
+openapi: 3.1.0
+info:
+  title: Fox News API for GPT
+  description: This API allows the GPT to retrieve the latest Fox News articles stored in a vector database.
+  version: 1.0.0
+servers:
+  - url: https://foxgpt-backend.elliot-at-helsinki.social
+    description: Server to query Fox News articles
+paths:
+  /query:
+    post:
+      operationId: getArticles
+      summary: Get newest news articles from Fox News.
+      description: This endpoint retrieves relevant news articles based on keywords to retrieve the top `k` similar items.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                keywords:
+                  type: array
+                  items:
+                    type: string
+                  description: The keywords to search for relevant news articles.
+                topK:
+                  type: integer
+                  default: 1
+                  description: The number of top articles to retrieve.
+      responses:
+        "200":
+          description: A list of news articles.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  matches:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        headline:
+                          type: string
+                          description: Title of the news article.
+                        articleBody:
+                          type: string
+                          description: Content of the news article.
+                        datePublished:
+                          type: string
+                          description: The time the article was published.
+                        dateModified:
+                          type: string
+                          description: The time the article was last modified.
+                        description:
+                          type: string
+                          description: A short summary of the news article.
+                        url:
+                          type: string
+                          description: The URL at which the article is published.
+        "400":
+          description: Invalid request
+        "500":
+          description: Internal server error
